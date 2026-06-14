@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>เครื่องมือวัดและแปลผลการบรรลุ PLO · สื่อสารการกีฬา มกช.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#0E1A2B;--navy:#13283F;--navy2:#1C3A5A;--paper:#EEF2F7;--card:#fff;--line:#DCE4EE;--muted:#5E6E82;--soft:#8294A8;
+--energy:#FF5A2C;--teal:#0FB5A6;--p1:#2F6FED;--p2:#0FB5A6;--p3:#7C5CFF;--p4:#FF7A18;--ok:#15A06B;--warn:#E8923A;--bad:#E0473F;
+--shadow:0 1px 2px rgba(16,26,43,.06),0 8px 24px rgba(16,26,43,.06);--r:14px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+body{font-family:'Sarabun',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.kanit,.num{font-family:'Kanit',sans-serif;font-weight:600}
+.topbar{position:sticky;top:0;z-index:50;background:linear-gradient(100deg,var(--navy),var(--navy2));color:#fff}
+.topbar-in{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:12px;padding:10px 18px;flex-wrap:wrap}
+.logo{width:36px;height:36px;border-radius:10px;background:var(--energy);display:grid;place-items:center;flex:none}
+.logo svg{width:21px;height:21px}
+.brand b{font-family:'Kanit';font-size:15px;display:block;line-height:1.1}
+.brand span{font-size:11.5px;color:#A9C0D8}
+.sp{flex:1}
+.tabs{display:flex;gap:4px;background:rgba(255,255,255,.08);border-radius:999px;padding:3px;flex-wrap:wrap}
+.tabs button{font-family:'Kanit';font-weight:500;font-size:13.5px;color:#cfe0f0;background:none;border:0;padding:6px 14px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.tabs button.on{background:#fff;color:var(--navy)}
+.wrap{max-width:1120px;margin:0 auto;padding:20px 18px 80px}
+.panel{display:none}.panel.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:16px}
+h2.sec{font-size:20px;margin-bottom:4px}
+.lead{color:var(--muted);margin-bottom:14px;font-size:14.5px}
+.eyebrow{font-family:'Kanit';font-weight:600;font-size:11.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--energy);margin-bottom:5px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+label.fld{font-family:'Kanit';font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:3px}
+input,select{font-family:'Sarabun';font-size:14px;border:1.5px solid var(--line);border-radius:9px;padding:7px 10px;outline:none;background:#fff;color:var(--ink)}
+input:focus,select:focus{border-color:var(--energy)}
+.btn{font-family:'Kanit';font-weight:500;font-size:13.5px;border:0;border-radius:9px;padding:8px 15px;cursor:pointer;background:var(--navy);color:#fff}
+.btn.alt{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
+.btn.orange{background:var(--energy)}
+.btn.sm{padding:5px 10px;font-size:12.5px}
+.btn.danger{background:#fff;color:var(--bad);border:1.5px solid #F3Cfcc}
+.help{font-size:13px;color:var(--muted);background:#F4F7FB;border-left:3px solid var(--energy);border-radius:0 8px 8px 0;padding:10px 14px;margin:6px 0 14px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{background:var(--navy);color:#fff;font-family:'Kanit';font-weight:500;text-align:left;padding:8px 10px;white-space:nowrap}
+td{padding:6px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:nth-child(even) td{background:#F7FAFD}
+.scroller{overflow:auto;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);max-height:560px}
+.center{text-align:center}
+.sc{width:62px;text-align:center;padding:5px}
+.chip{display:inline-block;font-family:'Kanit';font-size:11.5px;font-weight:500;padding:2px 9px;border-radius:999px;color:#fff}
+.plobadge{width:30px;height:30px;border-radius:8px;color:#fff;font-family:'Kanit';font-weight:700;font-size:15px;display:grid;place-items:center}
+.crit-edit{display:grid;gap:8px;margin-top:8px}
+.crit-edit .r{display:grid;grid-template-columns:34px 1fr;gap:8px;align-items:center}
+/* results */
+.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.pcard{border:1px solid var(--line);border-radius:var(--r);padding:16px;background:#fff;box-shadow:var(--shadow);border-top:4px solid var(--c)}
+.pcard .top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.pcard .big{font-family:'Kanit';font-weight:700;font-size:34px;line-height:1;color:var(--c)}
+.pcard .lvl{font-family:'Kanit';font-size:13px;margin-left:auto;padding:3px 10px;border-radius:999px}
+.bar{height:12px;border-radius:999px;background:#EBEFF5;position:relative;margin:10px 0 4px;overflow:hidden}
+.bar>i{position:absolute;left:0;top:0;bottom:0;border-radius:999px;background:var(--c)}
+.tgt{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.pmeta{font-size:12.5px;color:var(--muted);display:flex;justify-content:space-between;margin-top:2px}
+.interp{font-size:13.5px;margin-top:9px;padding-top:9px;border-top:1px dashed var(--line)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;box-shadow:var(--shadow)}
+.kpi b{font-family:'Kanit';font-weight:700;font-size:26px;display:block;line-height:1}
+.kpi span{font-size:12.5px;color:var(--muted)}
+.badge{font-family:'Kanit';font-size:12px;font-weight:500;padding:2px 9px;border-radius:999px}
+.b-ok{background:#E3F6EE;color:var(--ok)}.b-warn{background:#FCEFE0;color:var(--warn)}.b-bad{background:#FBE7E5;color:var(--bad)}
+.empty{color:var(--muted);text-align:center;padding:30px;font-size:14px}
+.foot{max-width:1120px;margin:0 auto;padding:18px;color:var(--muted);font-size:12px;text-align:center}
+@media(max-width:760px){.pgrid{grid-template-columns:1fr}.kpis{grid-template-columns:1fr}.brand span{display:none}}
+@media print{.topbar,.tabs,.btn,.toolbar{display:none!important}.panel{display:block!important}.scroller{max-height:none}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="topbar-in">
+ <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M6 6l12 12M18 6L6 18"/></svg></div>
+ <div class="brand"><b>เครื่องมือวัดการบรรลุ PLO</b><span>หลักสูตรสื่อสารการกีฬา · มกช. กรุงเทพ</span></div>
+ <div class="sp"></div>
+ <div class="tabs" id="tabs">
+   <button data-tab="entry" class="on">กรอกคะแนน</button>
+   <button data-tab="result">ผลวิเคราะห์</button>
+   <button data-tab="students">รายชื่อ</button>
+   <button data-tab="config">ตั้งค่า</button>
+ </div>
+</div></header>
+
+<div class="wrap">
+
+ <!-- ENTRY -->
+ <section class="panel on" id="p-entry">
+   <div class="eyebrow">ขั้นที่ 1 · กรอกคะแนน</div>
+   <h2 class="sec">กรอกคะแนน rubric รายคน</h2>
+   <p class="lead">เลือก PLO ที่จะกรอก แล้วให้คะแนนแต่ละเกณฑ์เป็นระดับ 1–4 (เว้นว่างได้ถ้ายังไม่ประเมิน) ระบบคำนวณผลให้อัตโนมัติในแท็บ “ผลวิเคราะห์”</p>
+   <div class="card">
+     <div class="row" style="justify-content:space-between">
+       <label class="fld">เลือก PLO ที่จะกรอก
+         <select id="entryPlo"></select>
+       </label>
+       <div class="row toolbar">
+         <button class="btn alt sm" onclick="addStudent()">+ เพิ่มนักศึกษา</button>
+         <button class="btn alt sm" onclick="seedDemo()">ใส่ตัวอย่าง 6 คน</button>
+       </div>
+     </div>
+     <div id="entryHint" class="help"></div>
+     <div class="scroller"><table id="entryTable"></table></div>
+     <p class="lead" style="margin-top:10px;font-size:13px">เกณฑ์ผ่าน: คะแนนเฉลี่ยของ PLO ≥ <b id="thHint"></b> (จากเต็ม <b id="scHint"></b>) · ต้องกรอกครบทุกเกณฑ์จึงนับว่าประเมินแล้ว</p>
+   </div>
+ </section>
+
+ <!-- RESULT -->
+ <section class="panel" id="p-result">
+   <div class="eyebrow">ขั้นที่ 2 · แปลผล</div>
+   <h2 class="sec">ผลการบรรลุผลลัพธ์การเรียนรู้ของรุ่น</h2>
+   <p class="lead">เปอร์เซ็นต์นักศึกษาที่บรรลุแต่ละ PLO พร้อมการแปลผลเทียบกับเป้าหมาย และรายชื่อที่ควรติดตาม</p>
+   <div class="kpis" id="kpis"></div>
+   <div class="pgrid" id="presult"></div>
+   <div class="card" style="margin-top:16px">
+     <h3 style="font-family:'Kanit';font-size:16px;margin-bottom:4px">รายชื่อที่ควรติดตาม (ยังไม่บรรลุ)</h3>
+     <p class="lead" style="font-size:13px">นักศึกษาที่ประเมินแล้วแต่ยังไม่ผ่านเกณฑ์ในแต่ละ PLO เพื่อวางแผนซ่อมเสริม</p>
+     <div class="scroller"><table id="watch"></table></div>
+   </div>
+   <div class="row toolbar" style="margin-top:14px">
+     <button class="btn orange sm" onclick="exportCSV()">ดาวน์โหลดผล (CSV)</button>
+     <button class="btn alt sm" onclick="window.print()">พิมพ์ / บันทึก PDF</button>
+   </div>
+ </section>
+
+ <!-- STUDENTS -->
+ <section class="panel" id="p-students">
+   <div class="eyebrow">รายชื่อนักศึกษา</div>
+   <h2 class="sec">จัดการรายชื่อ</h2>
+   <div class="card">
+     <div class="row">
+       <label class="fld">รหัส/เลขที่<input id="newSid" placeholder="เช่น 6701"></label>
+       <label class="fld" style="flex:1;min-width:200px">ชื่อ-นามสกุล<input id="newSname" placeholder="ชื่อนักศึกษา"></label>
+       <button class="btn" onclick="addStudentForm()">เพิ่ม</button>
+       <button class="btn alt" onclick="seedDemo()">ใส่ตัวอย่าง 6 คน</button>
+     </div>
+     <p class="lead" style="margin:10px 0 0;font-size:13px">หรือวางรายชื่อทีละบรรทัด (รหัส เว้นวรรค ชื่อ) แล้วกดเพิ่มทั้งหมด</p>
+     <div class="row" style="margin-top:6px">
+       <textarea id="bulk" rows="3" style="flex:1;min-width:240px;font-family:Sarabun;font-size:14px;border:1.5px solid var(--line);border-radius:9px;padding:8px" placeholder="6701 สมชาย ใจดี&#10;6702 สมหญิง รักเรียน"></textarea>
+       <button class="btn alt" onclick="addBulk()">เพิ่มทั้งหมด</button>
+     </div>
+     <div class="scroller" style="margin-top:14px"><table id="stuTable"></table></div>
+   </div>
+ </section>
+
+ <!-- CONFIG -->
+ <section class="panel" id="p-config">
+   <div class="eyebrow">ตั้งค่า</div>
+   <h2 class="sec">เกณฑ์การวัดและจุดวัดของแต่ละ PLO</h2>
+   <p class="lead">ปรับชื่อจุดวัด (วิชา/ชิ้นงาน) และเกณฑ์ย่อย rubric ให้ตรงกับหลักสูตรได้ ค่าตั้งต้นอิงคู่มือการวัดและประเมินผล</p>
+   <div class="card">
+     <div class="row">
+       <label class="fld">มาตรวัด (เต็ม)<select id="cfgScale"><option>4</option><option>5</option></select></label>
+       <label class="fld">เกณฑ์ผ่าน (เฉลี่ย ≥)<input id="cfgTh" type="number" step="0.5" style="width:90px"></label>
+       <label class="fld">เป้าหมาย % บรรลุของรุ่น<input id="cfgTarget" type="number" style="width:90px"></label>
+       <button class="btn" onclick="saveCfgBasics()">บันทึก</button>
+     </div>
+   </div>
+   <div id="cfgPlos"></div>
+   <div class="card" style="margin-top:4px">
+     <h3 style="font-family:'Kanit';font-size:15px;margin-bottom:8px">ข้อมูล (สำรอง/กู้คืน)</h3>
+     <div class="row">
+       <button class="btn alt sm" onclick="saveFile()">บันทึกไฟล์ข้อมูล (.json)</button>
+       <label class="btn alt sm" style="cursor:pointer">โหลดไฟล์ข้อมูล<input type="file" accept="application/json" style="display:none" onchange="loadFile(event)"></label>
+       <button class="btn danger sm" onclick="resetAll()">ล้างข้อมูลทั้งหมด</button>
+     </div>
+     <p class="lead" style="margin:8px 0 0;font-size:12.5px">ข้อมูลถูกบันทึกอัตโนมัติในเครื่องนี้ (เบราว์เซอร์เดียวกัน) แนะนำให้กดบันทึกไฟล์ .json เก็บไว้เป็นระยะ</p>
+   </div>
+ </section>
+
+</div>
+<div class="foot">เครื่องมือนี้ใช้แนวทางตามคู่มือการวัดและประเมินผล หลักสูตรศิลปศาสตรบัณฑิต สาขาวิชาสื่อสารการกีฬา (หลักสูตรปรับปรุง พ.ศ. 2568) · ผลที่ได้เป็นข้อมูลประกอบการพิจารณาของคณะกรรมการบริหารหลักสูตร</div>
+
+<script>
+const PC=['#2F6FED','#0FB5A6','#7C5CFF','#FF7A18'];
+const DEFAULT={
+ scale:4, threshold:3, target:70,
+ plos:[
+  {id:1,domain:'ความรู้',name:'สอบประมวลความรู้ / วิชาแกนทฤษฎี (ปี 4)',crit:['หลักและทฤษฎีการสื่อสาร','ความรู้ด้านกีฬา/อุตสาหกรรม','การจัดการ/นวัตกรรมการสื่อสาร','การคิดเชิงระบบ']},
+  {id:2,domain:'ทักษะ (ภาษาอังกฤษ)',name:'TNSU English Test / ภาษาอังกฤษวิชาชีพ',crit:['ฟัง–พูด','อ่าน','เขียน','การใช้ในงานวิชาชีพ']},
+  {id:3,domain:'ทักษะ (ผลิตสื่อ)',name:'โครงงาน/ชิ้นงานผลิตสื่อ (ปี 3–4)',crit:['เนื้อหา/ความคิดสร้างสรรค์','การเล่าเรื่อง','คุณภาพการผลิต','การออกแบบ/เลือกใช้สื่อ']},
+  {id:4,domain:'จริยธรรม/ลักษณะบุคคล',name:'รู้เท่าทันสื่อ + ประเมินพี่เลี้ยงฝึกฯ (ปี 4)',crit:['วิเคราะห์/รู้เท่าทันสื่อ','จริยธรรม/จรรยาบรรณ','ความรับผิดชอบต่อสังคม','การเคารพกฎระเบียบ']}
+ ]
+};
+let S={cfg:null,students:[],scores:{}};
+function load(){try{const r=localStorage.getItem('tnsu_assess');if(r){S=JSON.parse(r);}}catch(e){}
+ if(!S.cfg)S.cfg=JSON.parse(JSON.stringify(DEFAULT));
+ if(!S.students)S.students=[];if(!S.scores)S.scores={};}
+function save(){try{localStorage.setItem('tnsu_assess',JSON.stringify(S));}catch(e){}}
+const $=s=>document.querySelector(s),el=h=>{const t=document.createElement('template');t.innerHTML=h.trim();return t.content.firstElementChild;};
+const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+/* tabs */
+$('#tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+ document.querySelectorAll('#tabs button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+ document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+ document.getElementById('p-'+b.dataset.tab).classList.add('on');
+ if(b.dataset.tab==='result')renderResult();
+ if(b.dataset.tab==='students')renderStudents();
+ if(b.dataset.tab==='config')renderConfig();
+});
+
+/* ---------- students ---------- */
+function uid(){return 's'+Math.random().toString(36).slice(2,8);}
+function addStudent(){const sid=prompt('รหัส/เลขที่');if(sid===null)return;const nm=prompt('ชื่อ-นามสกุล')||'';S.students.push({key:uid(),sid:sid.trim(),name:nm.trim()});save();renderEntry();}
+function addStudentForm(){const sid=$('#newSid').value.trim(),nm=$('#newSname').value.trim();if(!sid&&!nm)return;
+ S.students.push({key:uid(),sid,name:nm});$('#newSid').value='';$('#newSname').value='';save();renderStudents();}
+function addBulk(){const lines=$('#bulk').value.split('\n').map(x=>x.trim()).filter(Boolean);
+ lines.forEach(l=>{const i=l.indexOf(' ');const sid=i>0?l.slice(0,i):l;const nm=i>0?l.slice(i+1):'';S.students.push({key:uid(),sid:sid.trim(),name:nm.trim()});});
+ $('#bulk').value='';save();renderStudents();}
+function delStudent(k){if(!confirm('ลบนักศึกษาคนนี้?'))return;S.students=S.students.filter(s=>s.key!==k);delete S.scores[k];save();renderStudents();}
+function seedDemo(){
+ const names=[['6701','สมชาย ใจดี'],['6702','สมหญิง รักเรียน'],['6703','ปิยะ มานะ'],['6704','กานต์ ตั้งใจ'],['6705','นภา ขยัน'],['6706','วีระ พากเพียร']];
+ names.forEach(n=>{const k=uid();S.students.push({key:k,sid:n[0],name:n[1]});
+   S.scores[k]={};S.cfg.plos.forEach(p=>{S.scores[k][p.id]=p.crit.map(()=> (Math.random()<.75? (Math.random()<.5?3:4) : 2) );});});
+ save();renderStudents();renderEntry();alert('ใส่ตัวอย่าง 6 คนพร้อมคะแนนสุ่มแล้ว — ไปแท็บ “ผลวิเคราะห์” เพื่อดูการแปลผล');
+}
+function renderStudents(){const t=$('#stuTable');
+ if(!S.students.length){t.innerHTML='<tr><td class="empty">ยังไม่มีรายชื่อ — เพิ่มด้านบน หรือกด “ใส่ตัวอย่าง 6 คน”</td></tr>';return;}
+ t.innerHTML='<tr><th style="width:90px">รหัส</th><th>ชื่อ-นามสกุล</th><th style="width:70px"></th></tr>'+
+  S.students.map(s=>`<tr><td>${esc(s.sid)}</td><td>${esc(s.name)}</td><td><button class="btn danger sm" onclick="delStudent('${s.key}')">ลบ</button></td></tr>`).join('');
+}
+
+/* ---------- entry ---------- */
+function fillEntryPlo(){const sel=$('#entryPlo');sel.innerHTML=S.cfg.plos.map(p=>`<option value="${p.id}">PLO ${p.id} · ${esc(p.domain)}</option>`).join('');}
+function renderEntry(){
+ $('#thHint').textContent=S.cfg.threshold;$('#scHint').textContent=S.cfg.scale;
+ const pid=+($('#entryPlo').value|| (S.cfg.plos[0]&&S.cfg.plos[0].id));
+ const plo=S.cfg.plos.find(p=>p.id===pid)||S.cfg.plos[0];
+ $('#entryHint').innerHTML=`<b>จุดวัด PLO ${plo.id}:</b> ${esc(plo.name)} — ให้คะแนนแต่ละเกณฑ์ 1–${S.cfg.scale}`;
+ const t=$('#entryTable');
+ if(!S.students.length){t.innerHTML='<tr><td class="empty">ยังไม่มีรายชื่อ — กด “เพิ่มนักศึกษา” หรือ “ใส่ตัวอย่าง 6 คน”</td></tr>';return;}
+ const opts=n=>{let o='<option value="">–</option>';for(let i=1;i<=S.cfg.scale;i++)o+=`<option ${n===i?'selected':''}>${i}</option>`;return o;};
+ let head='<tr><th style="width:80px">รหัส</th><th>ชื่อ</th>'+plo.crit.map(c=>`<th class="center" title="${esc(c)}">${esc(c.length>14?c.slice(0,13)+'…':c)}</th>`).join('')+'<th class="center" style="width:70px">เฉลี่ย</th><th class="center" style="width:64px">ผล</th></tr>';
+ let body=S.students.map(s=>{
+   const arr=(S.scores[s.key]&&S.scores[s.key][plo.id])||[];
+   const cells=plo.crit.map((c,ci)=>`<td class="center"><select class="sc" onchange="setScore('${s.key}',${plo.id},${ci},this.value)">${opts(arr[ci])}</select></td>`).join('');
+   const m=avg(arr,plo.crit.length);
+   const res=m==null?'<span class="badge">–</span>':(m>=S.cfg.threshold?'<span class="badge b-ok">ผ่าน</span>':'<span class="badge b-bad">ยัง</span>');
+   return `<tr><td>${esc(s.sid)}</td><td>${esc(s.name)}</td>${cells}<td class="center"><b id="avg-${s.key}">${m==null?'–':m.toFixed(2)}</b></td><td class="center" id="res-${s.key}">${res}</td></tr>`;
+ }).join('');
+ t.innerHTML=head+body;
+}
+function setScore(k,pid,ci,v){
+ if(!S.scores[k])S.scores[k]={};if(!S.scores[k][pid])S.scores[k][pid]=[];
+ S.scores[k][pid][ci]=v===''?null:+v;save();
+ const plo=S.cfg.plos.find(p=>p.id===pid);const m=avg(S.scores[k][pid],plo.crit.length);
+ const a=document.getElementById('avg-'+k),r=document.getElementById('res-'+k);
+ if(a)a.textContent=m==null?'–':m.toFixed(2);
+ if(r)r.innerHTML=m==null?'<span class="badge">–</span>':(m>=S.cfg.threshold?'<span class="badge b-ok">ผ่าน</span>':'<span class="badge b-bad">ยัง</span>');
+}
+function avg(arr,need){if(!arr)return null;const v=arr.slice(0,need).filter(x=>x!=null&&x!=='');if(v.length<need)return null;return v.reduce((a,b)=>a+ +b,0)/need;}
+
+/* ---------- compute & results ---------- */
+function compute(){
+ const out={plos:[],overall:{full:0,nStu:S.students.length}};
+ S.cfg.plos.forEach(p=>{
+   let assessed=0,passed=0,sumAvg=0,fail=[];
+   S.students.forEach(s=>{const m=avg(S.scores[s.key]&&S.scores[s.key][p.id],p.crit.length);
+     if(m==null)return;assessed++;sumAvg+=m;
+     if(m>=S.cfg.threshold)passed++;else fail.push(s);});
+   const pct=assessed?Math.round(passed/assessed*100):null;
+   const classAvg=assessed?(sumAvg/assessed):null;
+   out.plos.push({...p,assessed,passed,pct,classAvg,fail});
+ });
+ // students fully achieved
+ S.students.forEach(s=>{let ok=0,done=0;S.cfg.plos.forEach(p=>{const m=avg(S.scores[s.key]&&S.scores[s.key][p.id],p.crit.length);if(m!=null){done++;if(m>=S.cfg.threshold)ok++;}});
+   if(done===S.cfg.plos.length&&ok===S.cfg.plos.length)out.overall.full++;});
+ return out;
+}
+function levelOf(a){if(a==null)return['–','b-warn'];if(a>=3.5)return['ดีมาก','b-ok'];if(a>=S.cfg.threshold)return['ดี','b-ok'];if(a>=2)return['กำลังพัฒนา','b-warn'];return['เริ่มต้น','b-bad'];}
+function statusOf(pct){if(pct==null)return['ยังไม่ประเมิน','b-warn'];if(pct>=S.cfg.target)return['บรรลุเป้าหมาย','b-ok'];if(pct>=S.cfg.target-10)return['ใกล้เป้าหมาย','b-warn'];return['ต่ำกว่าเป้าหมาย','b-bad'];}
+function renderResult(){
+ const r=compute();
+ const assessedAny=r.plos.some(p=>p.assessed>0);
+ const kpiAvg=(()=>{const v=r.plos.filter(p=>p.pct!=null).map(p=>p.pct);return v.length?Math.round(v.reduce((a,b)=>a+b,0)/v.length):null;})();
+ $('#kpis').innerHTML=
+  `<div class="kpi"><b>${r.overall.nStu}</b><span>นักศึกษาทั้งหมด</span></div>
+   <div class="kpi"><b>${kpiAvg==null?'–':kpiAvg+'%'}</b><span>เฉลี่ยการบรรลุ PLO ของรุ่น</span></div>
+   <div class="kpi"><b>${r.overall.full}</b><span>คนที่บรรลุครบทั้ง 4 PLO</span></div>`;
+ if(!assessedAny){$('#presult').innerHTML='<div class="empty card">ยังไม่มีคะแนน — ไปแท็บ “กรอกคะแนน” หรือกด “ใส่ตัวอย่าง 6 คน” เพื่อดูตัวอย่างการแปลผล</div>';$('#watch').innerHTML='';return;}
+ $('#presult').innerHTML=r.plos.map(p=>{
+   const c=PC[p.id-1];const [lv,lc]=levelOf(p.classAvg);const [st,sc]=statusOf(p.pct);
+   const w=p.pct==null?0:p.pct;
+   const interp=p.pct==null?'ยังไม่มีนักศึกษาที่ประเมินครบทุกเกณฑ์':
+     `นักศึกษา <b>${p.passed}/${p.assessed}</b> คน บรรลุ (<b>${p.pct}%</b>) คะแนนเฉลี่ยของรุ่น <b>${p.classAvg.toFixed(2)}</b>/${S.cfg.scale} → ระดับ <b>${lv}</b>. `+
+     (p.pct>=S.cfg.target?'ผลอยู่ในระดับที่บรรลุเป้าหมายของหลักสูตร':
+      p.pct>=S.cfg.target-10?`ใกล้เป้าหมาย (${S.cfg.target}%) ควรเสริมกลุ่มที่ยังไม่ผ่าน`:
+      `ต่ำกว่าเป้าหมาย (${S.cfg.target}%) ควรทบทวนการจัดการเรียนการสอน/การวัดผลของจุดวัดนี้`);
+   return `<div class="pcard" style="--c:${c}">
+     <div class="top"><span class="plobadge" style="background:${c}">${p.id}</span>
+       <div><div style="font-family:Kanit;font-weight:500;font-size:14px">PLO ${p.id} · ${esc(p.domain)}</div>
+       <div style="font-size:12px;color:var(--muted)">${esc(p.name)}</div></div>
+       <span class="lvl ${sc}">${st}</span></div>
+     <div class="big">${p.pct==null?'–':p.pct+'%'}</div>
+     <div class="bar"><i style="width:${w}%"></i><span class="tgt" style="left:${S.cfg.target}%"></span></div>
+     <div class="pmeta"><span>ประเมินแล้ว ${p.assessed}/${r.overall.nStu} คน</span><span>เป้าหมาย ${S.cfg.target}%</span></div>
+     <div class="interp">${interp}</div>
+   </div>`;
+ }).join('');
+ // watchlist
+ const w=$('#watch');
+ const rows=[];
+ r.plos.forEach(p=>p.fail.forEach(s=>rows.push(`<tr><td><span class="plobadge" style="background:${PC[p.id-1]};width:24px;height:24px;font-size:12px">${p.id}</span></td><td>${esc(s.sid)}</td><td>${esc(s.name)}</td><td>${esc(p.domain)}</td><td class="center">${avg(S.scores[s.key][p.id],p.crit.length).toFixed(2)}</td></tr>`)));
+ w.innerHTML=rows.length?'<tr><th style="width:50px">PLO</th><th style="width:80px">รหัส</th><th>ชื่อ</th><th>ด้าน</th><th class="center" style="width:70px">เฉลี่ย</th></tr>'+rows.join(''):'<tr><td class="empty">ไม่มีรายชื่อที่ต้องติดตาม 🎉 หรือยังไม่มีข้อมูล</td></tr>';
+}
+
+/* ---------- config ---------- */
+function renderConfig(){
+ $('#cfgScale').value=S.cfg.scale;$('#cfgTh').value=S.cfg.threshold;$('#cfgTarget').value=S.cfg.target;
+ $('#cfgPlos').innerHTML=S.cfg.plos.map(p=>`
+  <div class="card" style="border-top:4px solid ${PC[p.id-1]}">
+   <div class="row"><span class="plobadge" style="background:${PC[p.id-1]}">${p.id}</span>
+     <label class="fld" style="flex:1;min-width:200px">ชื่อจุดวัด (วิชา/ชิ้นงาน) ของ PLO ${p.id}
+       <input value="${esc(p.name)}" onchange="setPloName(${p.id},this.value)"></label>
+     <span class="chip" style="background:${PC[p.id-1]}">${esc(p.domain)}</span></div>
+   <div class="crit-edit">${p.crit.map((c,i)=>`<div class="r"><span style="font-family:Kanit;color:var(--muted);text-align:center">${i+1}</span><input value="${esc(c)}" onchange="setCrit(${p.id},${i},this.value)"></div>`).join('')}</div>
+  </div>`).join('');
+}
+function setPloName(id,v){S.cfg.plos.find(p=>p.id===id).name=v;save();}
+function setCrit(id,i,v){S.cfg.plos.find(p=>p.id===id).crit[i]=v;save();}
+function saveCfgBasics(){S.cfg.scale=+$('#cfgScale').value;S.cfg.threshold=+$('#cfgTh').value;S.cfg.target=+$('#cfgTarget').value;save();fillEntryPlo();renderEntry();alert('บันทึกการตั้งค่าแล้ว');}
+
+/* ---------- data file ---------- */
+function saveFile(){const blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='plo-data.json';a.click();}
+function loadFile(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{S=JSON.parse(r.result);save();fillEntryPlo();renderEntry();renderStudents();renderConfig();alert('โหลดข้อมูลแล้ว');}catch(err){alert('ไฟล์ไม่ถูกต้อง');}};r.readAsText(f);}
+function resetAll(){if(!confirm('ล้างข้อมูลทั้งหมด (รายชื่อ คะแนน การตั้งค่า)?'))return;localStorage.removeItem('tnsu_assess');S={cfg:JSON.parse(JSON.stringify(DEFAULT)),students:[],scores:{}};save();fillEntryPlo();renderEntry();renderStudents();renderConfig();}
+function exportCSV(){
+ const r=compute();let rows=[['รหัส','ชื่อ',...S.cfg.plos.map(p=>'PLO'+p.id+' เฉลี่ย'),...S.cfg.plos.map(p=>'PLO'+p.id+' ผล'),'บรรลุ (PLO)']];
+ S.students.forEach(s=>{const avgs=[],res=[];let ok=0,done=0;
+   S.cfg.plos.forEach(p=>{const m=avg(S.scores[s.key]&&S.scores[s.key][p.id],p.crit.length);
+     avgs.push(m==null?'':m.toFixed(2));res.push(m==null?'-':(m>=S.cfg.threshold?'ผ่าน':'ยัง'));if(m!=null){done++;if(m>=S.cfg.threshold)ok++;}});
+   rows.push([s.sid,s.name,...avgs,...res,ok+'/'+S.cfg.plos.length]);});
+ rows.push([]);rows.push(['สรุป % บรรลุของรุ่น','',...r.plos.map(p=>p.pct==null?'-':p.pct+'%')]);
+ const csv='\ufeff'+rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='plo-results.csv';a.click();
+}
+
+/* init */
+load();fillEntryPlo();$('#entryPlo').addEventListener('change',renderEntry);renderEntry();
+</script>
+</body>
+</html>
